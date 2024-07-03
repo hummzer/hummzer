@@ -1,1 +1,1 @@
-![Leetcode Stats](https://leetcard.jacoblin.cool/Origamy?theme=dark)
+![Leetcode Stats](https://leetcard.jacoblin.cool/Origamy?ext=contest)
