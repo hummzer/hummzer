@@ -39,7 +39,7 @@ class Education(models.Model):
     def __str__(self):
         return self.title
 
-class Experience(modells.Model):
+class Experience(models.Model):
     title = models.CharField(max_length=50, blank=False, null=False)
     description = models.TextField(blank=False, null=False)
     year = models.CharField(max_length=50, blank=False, null=False)
@@ -74,7 +74,7 @@ class Project(models.Model):
 
 class Message(models.Model):
     name = models.CharField(max_length=100, null=False, blank=False)
-    email = models.EmailField(max_length=255, null=Fals , blank=False)
+    email = models.EmailField(max_length=255, null=False , blank=False)
     message = models.TextField(null=False, blank=False)
     send_time = models.DateTimeField(auto_now_add=True)
     is_read = models.BooleanField(default=False)
