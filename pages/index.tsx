@@ -50,7 +50,7 @@ const Home: React.FC<HomeProps> = ({ projects }) => {
         minHeight: '100vh',
       }}
     >
-      {/* iOS-style Particles */}
+      {/* iOS-style Background Particles */}
       {[...Array(30)].map((_, i) => (
         <div
           key={i}
@@ -84,9 +84,9 @@ const Home: React.FC<HomeProps> = ({ projects }) => {
       >
         <div
           style={{
-            maxWidth: '672px',
-            width: '85%',
-            height: '300px',
+            maxWidth: '850px',
+            width: '100%',
+            height: '360px',
             margin: '2rem auto',
             background: 'rgba(255, 255, 255, 0.9)',
             backdropFilter: 'blur(12px)',
@@ -94,6 +94,7 @@ const Home: React.FC<HomeProps> = ({ projects }) => {
             border: '1px solid #E5E5E7',
             boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
             display: 'flex',
+            position: 'relative',
           }}
         >
           {/* Left Side: "I am a" and Professions */}
@@ -132,13 +133,15 @@ const Home: React.FC<HomeProps> = ({ projects }) => {
               <motion.p
                 key={textIndex}
                 style={{
-                  fontSize: '2rem',
-                  color: '#FF2D55',
+                  fontSize: '2.5rem',
+                  color: '#5856D6',
                   fontFamily: "'SF Pro Text', -apple-system, sans-serif",
+                  fontWeight: 700,
+                  textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)',
                   marginTop: '1rem',
                 }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 20, textShadow: '2px 2px 4px rgba(0, 0, 0, 0)' }}
+                animate={{ opacity: 1, y: 0, textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)' }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.4 }}
               >
@@ -146,23 +149,39 @@ const Home: React.FC<HomeProps> = ({ projects }) => {
               </motion.p>
             </AnimatePresence>
           </div>
-          {/* Right Side: Image */}
+          {/* Right Side: Image with Particles */}
           <div
             style={{
               width: '40%',
               padding: '1rem',
               display: 'flex',
               alignItems: 'center',
+              position: 'relative',
             }}
           >
             <div
               style={{
                 width: '100%',
                 height: '80%',
-                background: 'url(https://via.placeholder.com/200?text=Your+Image) center/cover',
+                background: 'url(https://via.placeholder.com/200?text=Hamza+Salim) center/cover',
                 borderRadius: '16px',
               }}
             />
+            {[...Array(10)].map((_, i) => (
+              <div
+                key={`img-particle-${i}`}
+                style={{
+                  position: 'absolute',
+                  width: '6px',
+                  height: '6px',
+                  background: 'rgba(0, 122, 255, 0.5)',
+                  borderRadius: '50%',
+                  animation: `orbit ${2 + Math.random() * 2}s infinite linear`,
+                  animationDelay: `${Math.random() * 2}s`,
+                  transform: `rotate(${i * 36}deg) translate(120px)`,
+                }}
+              />
+            ))}
           </div>
         </div>
       </motion.section>
@@ -170,7 +189,12 @@ const Home: React.FC<HomeProps> = ({ projects }) => {
       {/* About Section */}
       <motion.section
         id="about"
-        style={{ padding: '4rem 0' }}
+        style={{
+          padding: '4rem 0',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
@@ -178,9 +202,9 @@ const Home: React.FC<HomeProps> = ({ projects }) => {
       >
         <div
           style={{
-            maxWidth: '672px',
-            width: '85%',
-            height: '300px',
+            maxWidth: '850px',
+            width: '100%',
+            height: '360px',
             margin: '2rem auto',
             background: 'rgba(255, 255, 255, 0.9)',
             backdropFilter: 'blur(12px)',
@@ -191,9 +215,10 @@ const Home: React.FC<HomeProps> = ({ projects }) => {
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
-          <h2 style={{ fontSize: '1.875rem', fontWeight: 600, marginBottom: '1rem', color: '#1C2526', textAlign: 'center' }}>
+          <h2 style={{ fontSize: '1.875rem', fontWeight: 600, marginBottom: '1rem', color: '#1C2526' }}>
             About Me
           </h2>
           <p style={{ fontSize: '1.125rem', color: '#1C2526', lineHeight: '1.5', textAlign: 'center' }}>
@@ -205,7 +230,12 @@ const Home: React.FC<HomeProps> = ({ projects }) => {
       {/* Projects Section */}
       <motion.section
         id="projects"
-        style={{ padding: '4rem 0' }}
+        style={{
+          padding: '4rem 0',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
@@ -213,9 +243,9 @@ const Home: React.FC<HomeProps> = ({ projects }) => {
       >
         <div
           style={{
-            maxWidth: '672px',
-            width: '85%',
-            height: '300px',
+            maxWidth: '850px',
+            width: '100%',
+            height: '360px',
             margin: '2rem auto',
             background: 'rgba(255, 255, 255, 0.9)',
             backdropFilter: 'blur(12px)',
@@ -233,7 +263,7 @@ const Home: React.FC<HomeProps> = ({ projects }) => {
             ref={projectsRef}
             style={{
               display: 'flex',
-              overflowX: 'auto',
+              overflowX: 'hidden',
               gap: '1rem',
               paddingBottom: '1rem',
             }}
@@ -251,7 +281,7 @@ const Home: React.FC<HomeProps> = ({ projects }) => {
                       borderRadius: '12px',
                       border: '1px solid #E5E5E7',
                       padding: '1rem',
-                      boxShadow: '0 2px 10px rgba(0, 0, 0, 0.05)',
+                      boxShadow: '0 2px 10px rgba(0, 0, 0, 0.05), 0 0 8px #007AFF',
                       minWidth: '250px',
                       position: 'relative',
                       overflow: 'visible',
@@ -319,7 +349,12 @@ const Home: React.FC<HomeProps> = ({ projects }) => {
       {/* Certifications Section */}
       <motion.section
         id="certifications"
-        style={{ padding: '4rem 0' }}
+        style={{
+          padding: '4rem 0',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
@@ -327,9 +362,9 @@ const Home: React.FC<HomeProps> = ({ projects }) => {
       >
         <div
           style={{
-            maxWidth: '672px',
-            width: '85%',
-            height: '300px',
+            maxWidth: '850px',
+            width: '100%',
+            height: '360px',
             margin: '2rem auto',
             background: 'rgba(255, 255, 255, 0.9)',
             backdropFilter: 'blur(12px)',
@@ -347,7 +382,7 @@ const Home: React.FC<HomeProps> = ({ projects }) => {
             ref={certsRef}
             style={{
               display: 'flex',
-              overflowX: 'auto',
+              overflowX: 'hidden',
               gap: '1rem',
               paddingBottom: '1rem',
             }}
@@ -360,7 +395,7 @@ const Home: React.FC<HomeProps> = ({ projects }) => {
                   borderRadius: '12px',
                   border: '1px solid #E5E5E7',
                   padding: '1rem',
-                  boxShadow: '0 2px 10px rgba(0, 0, 0, 0.05)',
+                  boxShadow: '0 2px 10px rgba(0, 0, 0, 0.05), 0 0 8px #007AFF',
                   minWidth: '250px',
                   display: 'flex',
                   alignItems: 'center',
@@ -404,7 +439,12 @@ const Home: React.FC<HomeProps> = ({ projects }) => {
       {/* Contact Section */}
       <motion.section
         id="contact"
-        style={{ padding: '4rem 0' }}
+        style={{
+          padding: '4rem 0',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
@@ -412,9 +452,9 @@ const Home: React.FC<HomeProps> = ({ projects }) => {
       >
         <div
           style={{
-            maxWidth: '672px',
-            width: '85%',
-            height: '300px',
+            maxWidth: '850px',
+            width: '100%',
+            height: '360px',
             margin: '2rem auto',
             background: 'rgba(255, 255, 255, 0.9)',
             backdropFilter: 'blur(12px)',
@@ -478,24 +518,46 @@ const Home: React.FC<HomeProps> = ({ projects }) => {
               onBlur={(e) => (e.target.style.borderColor = '#E5E5E7')}
               rows={5}
             />
-            <motion.button
-              type="submit"
-              style={{
-                width: '100%',
-                background: '#007AFF',
-                color: '#FFFFFF',
-                padding: '0.75rem',
-                borderRadius: '10px',
-                border: 'none',
-                fontSize: '1rem',
-                fontWeight: 500,
-                cursor: 'pointer',
-              }}
-              whileHover={{ background: '#005BB5' }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Send Message
-            </motion.button>
+            <div style={{ display: 'flex', gap: '1rem' }}>
+              <motion.button
+                type="submit"
+                style={{
+                  flex: 1,
+                  background: '#007AFF',
+                  color: '#FFFFFF',
+                  padding: '0.75rem',
+                  borderRadius: '10px',
+                  border: 'none',
+                  fontSize: '1rem',
+                  fontWeight: 500,
+                  cursor: 'pointer',
+                }}
+                whileHover={{ background: '#005BB5' }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Send Message
+              </motion.button>
+              <motion.a
+                href="tel:+1234567890"
+                style={{
+                  flex: 1,
+                  background: '#007AFF',
+                  color: '#FFFFFF',
+                  padding: '0.75rem',
+                  borderRadius: '10px',
+                  border: 'none',
+                  fontSize: '1rem',
+                  fontWeight: 500,
+                  cursor: 'pointer',
+                  textAlign: 'center',
+                  textDecoration: 'none',
+                }}
+                whileHover={{ background: '#005BB5' }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Call Me
+              </motion.a>
+            </div>
           </form>
         </div>
       </motion.section>
@@ -503,7 +565,12 @@ const Home: React.FC<HomeProps> = ({ projects }) => {
       {/* Blog Section */}
       <motion.section
         id="blog"
-        style={{ padding: '4rem 0' }}
+        style={{
+          padding: '4rem 0',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
@@ -511,9 +578,10 @@ const Home: React.FC<HomeProps> = ({ projects }) => {
       >
         <div
           style={{
-            maxWidth: '672px',
-            width: '85%',
-            height: '300px',
+            maxWidth: '850px',
+            width: '100%',
+            ping: '2rem',
+            height: '360px',
             margin: '2rem auto',
             background: 'rgba(255, 255, 255, 0.9)',
             backdropFilter: 'blur(12px)',
@@ -536,13 +604,17 @@ const Home: React.FC<HomeProps> = ({ projects }) => {
         </div>
       </motion.section>
 
-      {/* Inline Keyframes for Particles */}
+      {/* Inline Keyframes for Particles and Orbit */}
       <style>
         {`
 @keyframes fadeMove {
 0% { opacity: 0; transform: translateY(0); }
 50% { opacity: 0.5; transform: translateY(-20px); }
 100% { opacity: 0; transform: translateY(0); }
+}
+@keyframes orbit {
+0% { transform: rotate(0deg) translate(120px) rotate(0deg); }
+100% { transform: rotate(360deg) translate(120px) rotate(-360deg); }
 }
 `}
       </style>
