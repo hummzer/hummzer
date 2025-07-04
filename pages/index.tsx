@@ -7,19 +7,38 @@ interface Project {
   name: string;
   description: string | null;
   html_url: string;
+  homepage?: string | null;
+}
+
+interface Droplet {
+  left: string;
+  duration: string;
+  delay: string;
+  translateX50: string;
+  translateX100: string;
+}
+
+interface Certification {
+  id: number;
+  badgeId: string;
+  host: string;
+  name: string;
 }
 
 interface HomeProps {
   projects: Project[];
+  waterDroplets: Droplet[];
 }
 
-const Home: React.FC<HomeProps> = ({ projects }) => {
+const Home: React.FC<HomeProps> = ({ projects, waterDroplets }) => {
   const [textIndex, setTextIndex] = useState(0);
+  const [isClient, setIsClient] = useState(false);
   const texts = ['Software Engineer', 'Tech Enthusiast', 'Pentester'];
   const projectsRef = useRef<HTMLDivElement>(null);
   const certsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    setIsClient(true);
     const interval = setInterval(() => {
       setTextIndex((prev) => (prev + 1) % texts.length);
     }, 3000);
@@ -32,11 +51,18 @@ const Home: React.FC<HomeProps> = ({ projects }) => {
     }
   };
 
-  // Placeholder badge data (replace with your Credly/HTB badge URLs)
-  const certifications = [
-    { id: 1, name: 'Credly: AWS Certified Developer', image: 'https://via.placeholder.com/100?text=Credly' },
-    { id: 2, name: 'HTB: Web Exploitation', image: 'https://via.placeholder.com/100?text=HTB' },
-    { id: 3, name: 'Credly: Python Professional', image: 'https://via.placeholder.com/100?text=Credly' },
+  const scrollPrev = (ref: React.RefObject<HTMLDivElement>) => {
+    if (ref.current) {
+      ref.current.scrollBy({ left: -200, behavior: 'smooth' });
+    }
+  };
+
+  const certifications: Certification[] = [
+    { id: 1, badgeId: 'c5e260c6-5cf0-40ae-a5c3-7e1ec0178bcc', host: 'https://www.credly.com', name: 'Course 1' },
+    { id: 2, badgeId: '69bccc97-188d-4365-b97e-491feee29b12', host: 'https://www.credly.com', name: 'Course 2' },
+    { id: 3, badgeId: '69da723e-04bf-43eb-9cf7-3db4075e7a7f', host: 'https://www.credly.com', name: 'Course 3' },
+    { id: 4, badgeId: '2f0eca5d-bb41-42da-8e34-c0dc18c9072d', host: 'https://www.credly.com', name: 'Course 4' },
+    // { id: 5, badgeId: '2f0eca5d-bb41-42da-8e34-c0dc18c9072d', host: 'https://www.credly.com', name: 'Course 5' }, // Uncomment and update if needed
   ];
 
   return (
@@ -50,24 +76,6 @@ const Home: React.FC<HomeProps> = ({ projects }) => {
         minHeight: '100vh',
       }}
     >
-      {/* iOS-style Background Particles */}
-      {[...Array(30)].map((_, i) => (
-        <div
-          key={i}
-          style={{
-            position: 'absolute',
-            width: '8px',
-            height: '8px',
-            background: 'rgba(0, 122, 255, 0.3)',
-            borderRadius: '50%',
-            left: `${Math.random() * 100}vw`,
-            top: `${Math.random() * 100}vh`,
-            animation: `fadeMove ${3 + Math.random() * 3}s infinite ease-in-out`,
-            animationDelay: `${Math.random() * 2}s`,
-          }}
-        />
-      ))}
-
       {/* Banner Section */}
       <motion.section
         id="home"
@@ -76,7 +84,7 @@ const Home: React.FC<HomeProps> = ({ projects }) => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          padding: '4rem 0',
+          padding: '0 0 4rem 0',
         }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -84,10 +92,10 @@ const Home: React.FC<HomeProps> = ({ projects }) => {
       >
         <div
           style={{
-            maxWidth: '850px',
+            maxWidth: '1200px',
             width: '100%',
-            height: '360px',
-            margin: '2rem auto',
+            height: '500px',
+            margin: '0 auto 2rem auto',
             background: 'rgba(255, 255, 255, 0.9)',
             backdropFilter: 'blur(12px)',
             borderRadius: '20px',
@@ -97,7 +105,6 @@ const Home: React.FC<HomeProps> = ({ projects }) => {
             position: 'relative',
           }}
         >
-          {/* Left Side: "I am a" and Professions */}
           <div
             style={{
               width: '60%',
@@ -134,7 +141,7 @@ const Home: React.FC<HomeProps> = ({ projects }) => {
                 key={textIndex}
                 style={{
                   fontSize: '2.5rem',
-                  color: '#5856D6',
+                  color: '#8E8E93',
                   fontFamily: "'SF Pro Text', -apple-system, sans-serif",
                   fontWeight: 700,
                   textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)',
@@ -143,13 +150,12 @@ const Home: React.FC<HomeProps> = ({ projects }) => {
                 initial={{ opacity: 0, y: 20, textShadow: '2px 2px 4px rgba(0, 0, 0, 0)' }}
                 animate={{ opacity: 1, y: 0, textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)' }}
                 exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.4 }}
+                transition={{ duration: 0.8 }}
               >
                 {texts[textIndex]}
               </motion.p>
             </AnimatePresence>
           </div>
-          {/* Right Side: Image with Particles */}
           <div
             style={{
               width: '40%',
@@ -163,25 +169,30 @@ const Home: React.FC<HomeProps> = ({ projects }) => {
               style={{
                 width: '100%',
                 height: '80%',
-                background: 'url(https://via.placeholder.com/200?text=Hamza+Salim) center/cover',
+                background: 'url(/images/6e74707e-d907-4c55-a77b-01553266322d.jpg) center/cover',
                 borderRadius: '16px',
               }}
             />
-            {[...Array(10)].map((_, i) => (
+            {/* Uncomment to restore water droplets
+            {waterDroplets.map((droplet, i) => (
               <div
-                key={`img-particle-${i}`}
+                key={`img-droplet-${i}`}
                 style={{
                   position: 'absolute',
                   width: '6px',
-                  height: '6px',
-                  background: 'rgba(0, 122, 255, 0.5)',
-                  borderRadius: '50%',
-                  animation: `orbit ${2 + Math.random() * 2}s infinite linear`,
-                  animationDelay: `${Math.random() * 2}s`,
-                  transform: `rotate(${i * 36}deg) translate(120px)`,
+                  height: '10px',
+                  background: 'rgba(0, 122, 255, 0.6)',
+                  borderRadius: '50% 50% 20% 20%',
+                  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
+                  transformStyle: 'preserve-3d',
+                  left: droplet.left,
+                  bottom: '0',
+                  animation: `waterRise-${i} ${droplet.duration} infinite ease-in-out`,
+                  animationDelay: droplet.delay,
                 }}
               />
             ))}
+            */}
           </div>
         </div>
       </motion.section>
@@ -252,7 +263,7 @@ const Home: React.FC<HomeProps> = ({ projects }) => {
             borderRadius: '20px',
             border: '1px solid #E5E5E7',
             boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
-            padding: '2rem',
+            padding: '2rem 2rem 12px 2rem',
             position: 'relative',
           }}
         >
@@ -264,8 +275,8 @@ const Home: React.FC<HomeProps> = ({ projects }) => {
             style={{
               display: 'flex',
               overflowX: 'hidden',
-              gap: '1rem',
-              paddingBottom: '1rem',
+              gap: '1.5rem',
+              paddingBottom: '12px',
             }}
           >
             {projects.length === 0 ? (
@@ -274,55 +285,129 @@ const Home: React.FC<HomeProps> = ({ projects }) => {
               </p>
             ) : (
                 projects.map((project) => (
-                  <motion.div
+                  <div
                     key={project.id}
                     style={{
-                      background: '#FFFFFF',
+                      background: 'rgba(255, 255, 255, 0.95)',
                       borderRadius: '12px',
                       border: '1px solid #E5E5E7',
-                      padding: '1rem',
-                      boxShadow: '0 2px 10px rgba(0, 0, 0, 0.05), 0 0 8px #007AFF',
+                      boxShadow: '0 2px 10px rgba(0, 0, 0, 0.05), 0 0 8px rgba(0, 122, 255, 0.2)',
+                      backdropFilter: 'blur(4px)',
                       minWidth: '250px',
-                      position: 'relative',
-                      overflow: 'visible',
+                      height: '260px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      overflow: 'hidden',
                     }}
-                    animate={{
-                      rotate: [0, 2, -2, 0],
-                      scale: [1, 1.02, 1],
-                    }}
-                    transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
                   >
-                    <h3 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#1C2526', marginBottom: '0.5rem' }}>
-                      {project.name}
-                    </h3>
-                    <p style={{ fontSize: '1rem', color: '#1C2526', marginBottom: '0.75rem', lineHeight: '1.4' }}>
-                      {project.description || 'No description available.'}
-                    </p>
-                    <motion.a
-                      href={project.html_url}
+                    <div
                       style={{
-                        display: 'inline-flex',
+                        height: '15%',
+                        display: 'flex',
                         alignItems: 'center',
-                        background: '#007AFF',
-                        color: '#FFFFFF',
-                        padding: '0.5rem 1rem',
-                        borderRadius: '8px',
-                        textDecoration: 'none',
-                        fontSize: '0.875rem',
-                        fontWeight: 500,
+                        padding: '0 0.5rem',
                       }}
-                      whileHover={{ background: '#005BB5' }}
-                      whileTap={{ scale: 0.95 }}
-                      target="_blank"
-                      rel="noopener noreferrer"
                     >
-                      View on GitHub
-                      <span style={{ marginLeft: '0.5rem', fontSize: '1rem' }}>→</span>
-                    </motion.a>
-                  </motion.div>
+                      <h3 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#1C2526' }}>
+                        {project.name}
+                      </h3>
+                    </div>
+                    <div
+                      style={{
+                        height: '60%',
+                        padding: '0 0.5rem',
+                        borderTop: '1px solid #E5E5E7',
+                        borderBottom: '1px solid #E5E5E7',
+                      }}
+                    >
+                      <p style={{ fontSize: '1rem', color: '#1C2526', lineHeight: '1.4', margin: 0 }}>
+                        {project.description || 'No description available.'}
+                      </p>
+                    </div>
+                    <div
+                      style={{
+                        height: '25%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        padding: '0 0.5rem',
+                      }}
+                    >
+                      <motion.a
+                        href={project.html_url}
+                        style={{
+                          flex: 1,
+                          background: '#D1D5DB',
+                          color: '#1C2526',
+                          padding: '0.5rem',
+                          borderRadius: '8px',
+                          textDecoration: 'none',
+                          fontSize: '0.875rem',
+                          fontWeight: 500,
+                          textAlign: 'center',
+                          marginRight: '0.5rem',
+                        }}
+                        whileHover={{ background: '#9CA3AF' }}
+                        whileTap={{ scale: 0.95 }}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        GitHub
+                      </motion.a>
+                      {project.homepage && (
+                        <motion.a
+                          href={project.homepage}
+                          style={{
+                            flex: 1,
+                            background: '#D1D5DB',
+                            color: '#1C2526',
+                            padding: '0.5rem',
+                            borderRadius: '8px',
+                            textDecoration: 'none',
+                            fontSize: '0.875rem',
+                            fontWeight: 500,
+                            textAlign: 'center',
+                          }}
+                          whileHover={{ background: '#9CA3AF' }}
+                          whileTap={{ scale: 0.95 }}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Website
+                        </motion.a>
+                      )}
+                    </div>
+                  </div>
                 ))
               )}
           </div>
+          <motion.button
+            onClick={() => scrollPrev(projectsRef)}
+            style={{
+              position: 'absolute',
+              left: '1rem',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              background: '#E5E7EB',
+              color: '#1C2526',
+              padding: '0.75rem',
+              borderRadius: '12px',
+              border: 'none',
+              cursor: 'pointer',
+              fontSize: '1.25rem',
+              lineHeight: '1',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '40px',
+              height: '40px',
+            }}
+            whileHover={{ background: '#9CA3AF', scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            transition={{ duration: 0.2, ease: 'easeInOut' }}
+          >
+            ←
+          </motion.button>
           <motion.button
             onClick={() => scrollNext(projectsRef)}
             style={{
@@ -330,16 +415,23 @@ const Home: React.FC<HomeProps> = ({ projects }) => {
               right: '1rem',
               top: '50%',
               transform: 'translateY(-50%)',
-              background: '#007AFF',
-              color: '#FFFFFF',
-              padding: '0.5rem',
-              borderRadius: '50%',
+              background: '#E5E7EB',
+              color: '#1C2526',
+              padding: '0.75rem',
+              borderRadius: '12px',
               border: 'none',
               cursor: 'pointer',
-              fontSize: '1rem',
+              fontSize: '1.25rem',
+              lineHeight: '1',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '40px',
+              height: '40px',
             }}
-            whileHover={{ background: '#005BB5' }}
+            whileHover={{ background: '#9CA3AF', scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
+            transition={{ duration: 0.2, ease: 'easeInOut' }}
           >
             →
           </motion.button>
@@ -371,7 +463,7 @@ const Home: React.FC<HomeProps> = ({ projects }) => {
             borderRadius: '20px',
             border: '1px solid #E5E5E7',
             boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
-            padding: '2rem',
+            padding: '2rem 2rem 12px 2rem',
             position: 'relative',
           }}
         >
@@ -383,36 +475,103 @@ const Home: React.FC<HomeProps> = ({ projects }) => {
             style={{
               display: 'flex',
               overflowX: 'hidden',
-              gap: '1rem',
-              paddingBottom: '1rem',
+              gap: '1.5rem',
+              paddingBottom: '12px',
             }}
           >
             {certifications.map((cert) => (
               <div
                 key={cert.id}
                 style={{
-                  background: '#FFFFFF',
+                  background: 'rgba(255, 255, 255, 0.95)',
                   borderRadius: '12px',
                   border: '1px solid #E5E5E7',
-                  padding: '1rem',
-                  boxShadow: '0 2px 10px rgba(0, 0, 0, 0.05), 0 0 8px #007AFF',
+                  boxShadow: '0 2px 10px rgba(0, 0, 0, 0.05), 0 0 8px rgba(0, 122, 255, 0.2)',
+                  backdropFilter: 'blur(4px)',
                   minWidth: '250px',
+                  height: '260px',
                   display: 'flex',
-                  alignItems: 'center',
-                  gap: '1rem',
+                  flexDirection: 'column',
+                  overflow: 'hidden',
                 }}
               >
-                <img
-                  src={cert.image}
-                  alt={cert.name}
-                  style={{ width: '60px', height: '60px', borderRadius: '8px' }}
-                />
-                <p style={{ fontSize: '1rem', color: '#1C2526', fontWeight: 500 }}>
-                  {cert.name}
-                </p>
+                {isClient && (
+                  <div
+                    style={{
+                      height: '82%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      overflow: 'hidden',
+                    }}
+                  >
+                    <div
+                      data-iframe-width="200"
+                      data-iframe-height="200"
+                      data-share-badge-id={cert.badgeId}
+                      data-share-badge-host={cert.host}
+                      style={{
+                        width: '200px',
+                        height: '200px',
+                        overflow: 'hidden',
+                      }}
+                    />
+                  </div>
+                )}
+                <div
+                  style={{
+                    height: '18%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    background: 'rgba(255, 255, 255, 0.9)',
+                    borderTop: '1px solid #E5E5E7',
+                    padding: '0 0.5rem',
+                  }}
+                >
+                  <p
+                    style={{
+                      fontSize: '1rem',
+                      fontWeight: 500,
+                      color: '#1C2526',
+                      textAlign: 'center',
+                      lineHeight: '1.4',
+                      margin: 0,
+                    }}
+                  >
+                    {cert.name}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
+          <motion.button
+            onClick={() => scrollPrev(certsRef)}
+            style={{
+              position: 'absolute',
+              left: '1rem',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              background: '#E5E7EB',
+              color: '#1C2526',
+              padding: '0.75rem',
+              borderRadius: '12px',
+              border: 'none',
+              cursor: 'pointer',
+              fontSize: '1.25rem',
+              lineHeight: '1',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '40px',
+              height: '40px',
+            }}
+            whileHover={{ background: '#9CA3AF', scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            transition={{ duration: 0.2, ease: 'easeInOut' }}
+          >
+            ←
+          </motion.button>
           <motion.button
             onClick={() => scrollNext(certsRef)}
             style={{
@@ -420,16 +579,23 @@ const Home: React.FC<HomeProps> = ({ projects }) => {
               right: '1rem',
               top: '50%',
               transform: 'translateY(-50%)',
-              background: '#007AFF',
-              color: '#FFFFFF',
-              padding: '0.5rem',
-              borderRadius: '50%',
+              background: '#E5E7EB',
+              color: '#1C2526',
+              padding: '0.75rem',
+              borderRadius: '12px',
               border: 'none',
               cursor: 'pointer',
-              fontSize: '1rem',
+              fontSize: '1.25rem',
+              lineHeight: '1',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '40px',
+              height: '40px',
             }}
-            whileHover={{ background: '#005BB5' }}
+            whileHover={{ background: '#9CA3AF', scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
+            transition={{ duration: 0.2, ease: 'easeInOut' }}
           >
             →
           </motion.button>
@@ -454,7 +620,7 @@ const Home: React.FC<HomeProps> = ({ projects }) => {
           style={{
             maxWidth: '850px',
             width: '100%',
-            height: '360px',
+            height: '420px',
             margin: '2rem auto',
             background: 'rgba(255, 255, 255, 0.9)',
             backdropFilter: 'blur(12px)',
@@ -538,7 +704,7 @@ const Home: React.FC<HomeProps> = ({ projects }) => {
                 Send Message
               </motion.button>
               <motion.a
-                href="tel:+1234567890"
+                href="tel:+254716 475 923" 
                 style={{
                   flex: 1,
                   background: '#007AFF',
@@ -580,7 +746,6 @@ const Home: React.FC<HomeProps> = ({ projects }) => {
           style={{
             maxWidth: '850px',
             width: '100%',
-            ping: '2rem',
             height: '360px',
             margin: '2rem auto',
             background: 'rgba(255, 255, 255, 0.9)',
@@ -604,25 +769,55 @@ const Home: React.FC<HomeProps> = ({ projects }) => {
         </div>
       </motion.section>
 
-      {/* Inline Keyframes for Particles and Orbit */}
+      {/* Inline Keyframes */}
       <style>
         {`
-@keyframes fadeMove {
-0% { opacity: 0; transform: translateY(0); }
-50% { opacity: 0.5; transform: translateY(-20px); }
-100% { opacity: 0; transform: translateY(0); }
+/* Uncomment to restore water droplets
+${waterDroplets
+.map(
+(droplet, i) => `
+@keyframes waterRise-${i} {
+0% { opacity: 0.6; transform: translateY(100px) translateX(0); }
+50% { opacity: 0.8; transform: translateY(0) translateX(${droplet.translateX50}px); }
+100% { opacity: 0; transform: translateY(-100px) translateX(${droplet.translateX100}px); }
 }
-@keyframes orbit {
-0% { transform: rotate(0deg) translate(120px) rotate(0deg); }
-100% { transform: rotate(360deg) translate(120px) rotate(-360deg); }
+`
+)
+.join('')}
+*/
+/* Hide Credly iframe non-image content */
+div[data-share-badge-id] iframe {
+width: 200px !important;
+height: 200px !important;
+border: none;
+}
+div[data-share-badge-id] iframe * {
+display: none;
+}
+div[data-share-badge-id] iframe img {
+display: block !important;
+width: 100%;
+height: 100%;
+object-fit: contain;
 }
 `}
       </style>
+
+      {/* Credly Embed Script */}
+      {isClient && <script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>}
     </div>
   );
 };
 
 export async function getStaticProps() {
+  const waterDroplets: Droplet[] = Array.from({ length: 10 }, () => ({
+    left: `${70 + Math.random() * 80}px`,
+    duration: `${2 + Math.random() * 2}s`,
+    delay: `${Math.random() * 1.5}s`,
+    translateX50: `${Math.random() * 20 - 10}`,
+    translateX100: `${Math.random() * 20 - 10}`,
+  }));
+
   try {
     const headers = process.env.GITHUB_TOKEN
       ? { Authorization: `token ${process.env.GITHUB_TOKEN}` }
@@ -630,18 +825,19 @@ export async function getStaticProps() {
     const res = await fetch('https://api.github.com/users/hummzer/repos', { headers });
     if (!res.ok) {
       console.error(`GitHub API error: ${res.status}`);
-      return { props: { projects: [] } };
+      return { props: { projects: [], waterDroplets } };
     }
     const data = await res.json();
     return {
       props: {
         projects: data,
+        waterDroplets,
       },
       revalidate: 86400,
     };
   } catch (error) {
     console.error('Error fetching GitHub repos:', error);
-    return { props: { projects: [] } };
+    return { props: { projects: [], waterDroplets } };
   }
 }
 
