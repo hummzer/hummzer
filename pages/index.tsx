@@ -233,7 +233,7 @@ const Home: React.FC<HomeProps> = ({ projects, waterDroplets }) => {
             About Me
           </h2>
           <p style={{ fontSize: '1.125rem', color: '#1C2526', lineHeight: '1.5', textAlign: 'center' }}>
-            Software Engineering student passionate about coding and cybersecurity.
+            Software Engineer passionate about coding and cybersecurity.
           </p>
         </div>
       </motion.section>
