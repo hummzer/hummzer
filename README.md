@@ -1,5 +1,5 @@
 <div align="center">
-<img src="https://github.com/user-attachments/assets/7bb65ef4-acce-4898-9520-4450cc313cea" width="25%" align="right" />
+<img src="https://wallpapercave.com/wp/wp6443999.jpg" width="25%" align="right" />
 <img src="https://readme-typing-svg.demolab.com?font=Jura&weight=500&size=50&duration=4000&pause=300&color=white&center=true&vCenter=true&multiline=true&repeat=false&random=false&width=1300&height=140&lines=Aye+Hello;I'm+Hamza%2C+a+tech+enthusiast" width="70%" />
 <br><br>
 <pre>
