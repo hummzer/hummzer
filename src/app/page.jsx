@@ -82,7 +82,7 @@ export default function TerminalPortfolio() {
 			"  Email:    salimhamza371@gmail.com",
 			"  GitHub:   github.com/hummzer",
 			"  Phone:   +254 716 475 923",
-			"  Website:  yourwebsite.com",
+			"  Website:  hummzer.vercel.app",
 			"",
 			"Feel free to reach out for collaborations or opportunities!",
 			"",
