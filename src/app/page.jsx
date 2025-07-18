@@ -94,7 +94,7 @@ export default function TerminalPortfolio() {
 			"  → https://yourwebsite.com/resume.pdf",
 			"",
 			"  Or view it online at:",
-			"  → https://yourwebsite.com/resume",
+			"  → https://hummzer.vercel.app/",
 			"",
 		],
 	};
