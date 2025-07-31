@@ -39,7 +39,7 @@ export default function TerminalPortfolio() {
       "Hello world! 👋",
       "",
       "I'm Hamza Salim, a Full Stack Software Engineer.",
-      "I build web applications, primarily using Next.js and Larav.",
+      "I build web applications, primarily using Next.js and Laravel.",
       "",
       "My journey in tech is driven by a love forWeb Development, OpenSource,the magic in scripting, Linux, AI, Quantum Computing and Blockchain.",
       "",
