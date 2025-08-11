@@ -41,9 +41,11 @@ export default function TerminalPortfolio() {
     about: [
       "Hello world! 👋",
       "",
-      "I'm Hamza Salim, a passionate Full Stack Software Engineer.",
-      "My journey in tech is fueled by a love for elegant code, open-source projects, and a fascination with emerging fields like AI and blockchain.",
-      "I primarily work with the Next.js and Laravel ecosystems, crafting dynamic and robust web applications.",
+
+      "I'm Hamza Salim, a Full Stack Software Engineer.",
+      "I build web applications, primarily using Next.js and Laravel.",
+      "",
+      "My journey in tech is driven by a love forWeb Development, OpenSource,the magic in scripting, Linux, AI, Quantum Computing and Blockchain.",
       "",
     ],
     skills: [
