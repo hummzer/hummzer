@@ -1,7 +1,7 @@
 "use client"
 
 import Footer from "../components/Footer"
-import React from "react"
+import React, { useEffect, useRef, useState } from "react"
 
 export default function Portfolio() {
   const projects = [
@@ -30,6 +30,50 @@ export default function Portfolio() {
       link: "",
     },
   ]
+
+  // refs for the videos and the section elements
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([])
+  const sectionRefs = useRef<(HTMLElement | null)[]>([])
+
+  // which section is currently active (visible) — used to drive opacity classes
+  const [activeIndex, setActiveIndex] = useState<number | null>(null)
+
+  useEffect(() => {
+    // observe sections (not videos) so we get stable intersection info for each slide
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const idxAttr = entry.target.getAttribute("data-index")
+          const idx = idxAttr ? Number(idxAttr) : NaN
+          if (Number.isNaN(idx)) return
+
+          if (entry.isIntersecting) {
+            // When the section becomes visible -> mark active and play its video
+            setActiveIndex(idx)
+            const vid = videoRefs.current[idx]
+            if (vid) {
+              // ensure video is ready to play (muted allows autoplay in most browsers)
+              vid.muted = true
+              vid.play().catch(() => {})
+            }
+          } else {
+            // When leaving -> pause the video and clear activeIndex only if it was this one
+            const vid = videoRefs.current[idx]
+            vid?.pause()
+            setActiveIndex((prev) => (prev === idx ? null : prev))
+          }
+        })
+      },
+      { threshold: 0.6 } // ~60% visible triggers
+    )
+
+    // attach observer to each section element
+    sectionRefs.current.forEach((el) => {
+      if (el) observer.observe(el)
+    })
+
+    return () => observer.disconnect()
+  }, [])
 
   return (
     <main className="h-screen overflow-y-scroll snap-y snap-mandatory">
@@ -70,39 +114,74 @@ export default function Portfolio() {
 
       {/* Projects Section */}
       <section id="projects">
-        {projects.map((project, index) => (
-          <div
-            key={index}
-            className={`h-screen flex flex-col justify-center items-center px-10 md:px-20 snap-start ${
-              index % 2 === 0 ? "bg-white text-black" : "bg-gray-200 text-black"
-            }`}
-          >
-            <div className="max-w-3xl text-center">
-              <h2
-                className="text-5xl md:text-7xl font-bold uppercase tracking-widest mb-6"
-                style={{ fontFamily: "Playfair Display, serif" }}
+        {projects.map((project, index) => {
+          const isActive = activeIndex === index
+
+          return (
+            <section
+              key={index}
+              data-index={index}
+              // keep sections full-screen and snap-start
+              ref={(el) => (sectionRefs.current[index] = el)}
+              className="relative h-screen snap-start overflow-hidden flex items-center justify-center"
+            >
+              {/* BACKGROUND VIDEO (fades in when section is active) */}
+              <video
+                ref={(el) => (videoRefs.current[index] = el)}
+                className={`absolute inset-0 w-full h-full object-cover pointer-events-none transition-opacity duration-700 ease-in-out ${
+                  isActive ? "opacity-100" : "opacity-0"
+                }`}
+                src="/momo.mp4"
+                loop
+                muted
+                playsInline
+                preload="auto"
+              />
+
+              {/* STATIC overlay content (fades OUT when section becomes active) */}
+              <div
+                className={`absolute inset-0 flex items-center justify-center transition-opacity duration-700 ease-in-out ${
+                  isActive ? "opacity-0" : "opacity-100"
+                }`}
+                aria-hidden={isActive} // accessibility hint (overlay hidden when video visible)
               >
-                {project.title}
-              </h2>
-              <p className="text-sm md:text-base uppercase tracking-[0.2em] font-light leading-relaxed mb-4">
-                {project.description}
-              </p>
-              <p className="text-xs md:text-sm tracking-wider text-gray-500 mb-6">
-                Tech: {project.tech}
-              </p>
+                <div className="max-w-3xl text-center text-black px-10 md:px-20">
+                  <h2
+                    className="text-5xl md:text-7xl font-bold uppercase tracking-widest mb-6"
+                    style={{ fontFamily: "Playfair Display, serif" }}
+                  >
+                    {project.title}
+                  </h2>
+                  <p className="text-sm md:text-base uppercase tracking-[0.2em] font-light leading-relaxed mb-4">
+                    {project.description}
+                  </p>
+                  <p className="text-xs md:text-sm tracking-wider text-black/70">
+                    Tech: {project.tech}
+                  </p>
+                </div>
+              </div>
+
+              {/* VIDEO TINT (keeps text readable when video visible) */}
+              <div
+                className={`absolute inset-0 transition-opacity duration-9500 ease-in-out pointer-events-none ${
+                  isActive ? (index % 2 === 0 ? "bg-black/50" : "bg-black/30") : "bg-transparent"
+                }`}
+              />
+
+              {/* Persistent bottom-right button (always visible above layers) */}
               {project.link && (
-                <a
+                <button
                   href={project.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm md:text-base uppercase tracking-widest font-light hover:text-gray-600 transition-colors duration-300"
+                  className="absolute bottom-8 right-8 z-30 bg-white text-black px-8 py-6 rounded-lg shadow-lg uppercase tracking-widest font-semibold hover:bg-gray-100 transition-colors duration-200"
                 >
                   View Project →
-                </a>
+                </button>
               )}
-            </div>
-          </div>
-        ))}
+            </section>
+          )
+        })}
       </section>
 
       {/* Contact Section */}
