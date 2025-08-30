@@ -32,25 +32,26 @@ export default function Portfolio() {
   ]
 
   return (
-  <div className="min-h-screen">      
-    <section className="relative h-screen flex flex-col justify-center items-center bg-white text-black">
-      <div className="z-20 text-center">
-        <h1
-          className="text-7xl md:text-9xl font-bold uppercase tracking-widest"
-          style={{ fontFamily: "Playfair Display, serif" }}
-        >
-          Hamza Salim
-        </h1>
-        <p className="mt-6 text-sm md:text-base uppercase tracking-[0.2em] font-light">
-          Full Stack Software Engineer
-        </p>
-      </div>
-    </section>
+    <main className="h-screen overflow-y-scroll snap-y snap-mandatory">
+      {/* Hero Section */}
+      <section className="relative h-screen flex flex-col justify-center items-center bg-white text-black snap-start">
+        <div className="z-20 text-center">
+          <h1
+            className="text-7xl md:text-9xl font-bold uppercase tracking-widest"
+            style={{ fontFamily: "Playfair Display, serif" }}
+          >
+            Hamza Salim
+          </h1>
+          <p className="mt-6 text-sm md:text-base uppercase tracking-[0.2em] font-light">
+            Full Stack Software Engineer
+          </p>
+        </div>
+      </section>
 
-
+      {/* About Section */}
       <section
         id="about"
-        className="h-screen flex flex-col justify-center items-center bg-gray-200 text-black px-6"
+        className="h-screen flex flex-col justify-center items-center bg-gray-200 text-black px-6 snap-start"
       >
         <div className="max-w-3xl text-center">
           <h2
@@ -67,13 +68,13 @@ export default function Portfolio() {
         </div>
       </section>
 
-
+      {/* Projects Section */}
       <section id="projects">
         {projects.map((project, index) => (
           <div
             key={index}
-            className={`h-screen flex flex-col justify-center items-center px-10 md:px-20 ${
-              index % 2 === 0 ? "bg-white text-black" : "bg-gray-100 text-black"
+            className={`h-screen flex flex-col justify-center items-center px-10 md:px-20 snap-start ${
+              index % 2 === 0 ? "bg-white text-black" : "bg-gray-200 text-black"
             }`}
           >
             <div className="max-w-3xl text-center">
@@ -104,10 +105,10 @@ export default function Portfolio() {
         ))}
       </section>
 
-
+      {/* Contact Section */}
       <section
         id="contact"
-        className="h-screen flex flex-col justify-center items-center bg-white text-black px-10 md:px-20"
+        className="h-screen flex flex-col justify-center items-center bg-white text-black px-10 md:px-20 snap-start"
       >
         <div className="max-w-3xl text-center">
           <h2
@@ -144,8 +145,7 @@ export default function Portfolio() {
         </div>
       </section>
 
-
       <Footer />
-    </div>
+    </main>
   )
 }
