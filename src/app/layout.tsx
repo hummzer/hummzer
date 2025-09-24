@@ -1,3 +1,5 @@
+// layout.tsx (unchanged, but included for completeness)
+
 import "./globals.css";
 import type { Metadata } from "next";
 import { DM_Serif_Display } from "next/font/google";
