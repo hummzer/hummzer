@@ -38,7 +38,7 @@ I run HAOS and manage a growing number of integrated devices at home. Most of my
 
 ## coding activity
 
-[![Wakatime Stats](https://github-readme-stats.vercel.app/api/wakatime?username=40b39cf7-de18-4bdf-966d-6d8f3307e3b6&layout=compact&theme=dark)](https://wakatime.com/@40b39cf7-de18-4bdf-966d-6d8f3307e3b6)
+[![Wakatime Stats](https://github-readme-stats.vercel.app/api/wakatime?username=za34&layout=compact&theme=dark)](https://wakatime.com/@40b39cf7-de18-4bdf-966d-6d8f3307e3b6)
 
 ---
 
