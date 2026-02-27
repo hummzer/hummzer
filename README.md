@@ -1,4 +1,4 @@
-# open source explorer.
+# Open Source Explorer.
 
 > open source, terminal, and too many side projects.
 > 
