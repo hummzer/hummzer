@@ -1,10 +1,13 @@
 # open source explorer.
 
 > open source, terminal, and too many side projects.
+> 
 
 [![wakatime](https://wakatime.com/badge/user/40b39cf7-de18-4bdf-966d-6d8f3307e3b6.svg)](https://wakatime.com/@40b39cf7-de18-4bdf-966d-6d8f3307e3b6)
 
+
 ---
+
 
 ## what i do
 
@@ -26,7 +29,9 @@ Python is probably my most-used language outside of Bash and Zsh. I've done a lo
 **open source & homelab**
 I run HAOS and manage a growing number of integrated devices at home. Most of my non-work tinkering ends up here — automations, device integrations, keeping things self-hosted.
 
+
 ---
+
 
 ## beyond the code
 
@@ -34,12 +39,8 @@ I run HAOS and manage a growing number of integrated devices at home. Most of my
 
 **gamer** — I post recorded gameplay on YouTube. Drop a sub if that's your thing → [YouTube →](https://www.youtube.com/@MrM4hn)
 
----
-
-## coding activity
-
-[![Wakatime Stats](https://github-readme-stats.vercel.app/api/wakatime?username=za34&layout=compact&theme=dark)](https://wakatime.com/@40b39cf7-de18-4bdf-966d-6d8f3307e3b6)
 
 ---
+
 
 *building in the open. always.*
