@@ -31,10 +31,5 @@
 
 **chess player** — If you play, feel free to challenge me directly on [Lichess →](https://lichess.org/@/ZA3_4)
 
-**gamer** — I post recorded gameplay on YouTube. Drop a sub if that's your thing → [YouTube →](https://www.youtube.com/@MrM4hn)
-
 
 ---
-
-
-*building in the open. always.*
