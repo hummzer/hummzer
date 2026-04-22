@@ -16,15 +16,11 @@
 
 **cybersecurity**
 
-**algorithmic trading**
-
 **SEO development**
 
 **scripting & automation**
 
-**open source & homelab**
 
----
 
 
 ## beyond the code
